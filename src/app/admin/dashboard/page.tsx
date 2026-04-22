@@ -2,7 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { supabase } from '@/src/lib/supabase';
+import { 
+  getContactMessages, 
+  markMessageAsRead as markAsReadAction, 
+  deleteMessage as deleteMessageAction 
+} from '@/src/lib/actions';
 import { 
   LogOut, 
   Mail, 
@@ -13,7 +19,10 @@ import {
   Phone, 
   MessageSquare, 
   LayoutDashboard,
-  Search
+  Search,
+  Users as UsersIcon,
+  Globe,
+  FileEdit
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -48,15 +57,12 @@ export default function AdminDashboard() {
 
   const fetchMessages = async () => {
     setLoading(true);
-    const { data, error } = await supabase
-      .from('contact_messages')
-      .select('*')
-      .order('created_at', { ascending: false });
+    const result = await getContactMessages();
 
-    if (error) {
-      console.error('Error fetching messages:', error);
+    if (!result.success) {
+      console.error('Error fetching messages:', result.error);
     } else {
-      setMessages(data || []);
+      setMessages(result.data || []);
     }
     setLoading(false);
   };
@@ -67,12 +73,9 @@ export default function AdminDashboard() {
   };
 
   const markAsRead = async (id: string) => {
-    const { error } = await supabase
-      .from('contact_messages')
-      .update({ is_read: true })
-      .eq('id', id);
+    const result = await markAsReadAction(id);
 
-    if (!error) {
+    if (result.success) {
       setMessages(messages.map(m => m.id === id ? { ...m, is_read: true } : m));
     }
   };
@@ -80,12 +83,9 @@ export default function AdminDashboard() {
   const deleteMessage = async (id: string) => {
     if (!window.confirm('Ești sigur că vrei să ștergi acest mesaj?')) return;
 
-    const { error } = await supabase
-      .from('contact_messages')
-      .delete()
-      .eq('id', id);
+    const result = await deleteMessageAction(id);
 
-    if (!error) {
+    if (result.success) {
       setMessages(messages.filter(m => m.id !== id));
     }
   };
@@ -107,16 +107,47 @@ export default function AdminDashboard() {
           <span className="font-black text-lg tracking-tighter uppercase">Admin Panel</span>
         </div>
 
-        <nav className="flex-1 space-y-2">
-          <button className="w-full flex items-center gap-3 px-4 py-3 bg-royal/20 text-cyan-glow rounded-xl font-bold text-sm">
-            <Mail size={18} />
-            Lead-uri Contact
-          </button>
+        <nav className="flex-1 space-y-4">
+          <div className="space-y-2">
+            <p className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] px-4">Meniu</p>
+            <Link 
+              href="/admin/dashboard"
+              className="w-full flex items-center gap-3 px-4 py-3 bg-royal/20 text-cyan-glow rounded-xl font-bold text-sm transition-all"
+            >
+              <Mail size={18} />
+              Lead-uri Contact
+            </Link>
+            <Link 
+              href="/admin/dashboard/users"
+              className="w-full flex items-center gap-3 px-4 py-3 text-white/60 hover:text-white hover:bg-white/5 rounded-xl font-bold text-sm transition-all"
+            >
+              <UsersIcon size={18} />
+              Gestionare Utilizatori
+            </Link>
+            <Link 
+              href="/admin/dashboard/content"
+              className="w-full flex items-center gap-3 px-4 py-3 text-white/60 hover:text-white hover:bg-white/5 rounded-xl font-bold text-sm transition-all"
+            >
+              <FileEdit size={18} />
+              Editare Conținut
+            </Link>
+          </div>
+
+          <div className="pt-8 border-t border-white/10 space-y-2">
+            <p className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] px-4">Sistem</p>
+            <Link 
+              href="/"
+              className="w-full flex items-center gap-3 px-4 py-3 text-white/60 hover:text-white hover:bg-white/5 rounded-xl font-bold text-sm transition-all"
+            >
+              <Globe size={18} />
+              Înapoi la Site
+            </Link>
+          </div>
         </nav>
 
         <button 
           onClick={handleLogout}
-          className="flex items-center gap-3 px-4 py-3 text-white/50 hover:text-white transition-colors text-sm font-bold"
+          className="flex items-center gap-3 px-4 py-3 text-white/50 hover:text-white transition-colors text-sm font-bold mt-auto"
         >
           <LogOut size={18} />
           Deconectare

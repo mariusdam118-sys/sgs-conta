@@ -9,8 +9,8 @@ import { cn } from '@/src/lib/utils';
 
 const navLinks = [
   { name: 'Acasă', path: '/' },
-  { name: 'Servicii', path: '/#servicii' },
-  { name: 'Despre Noi', path: '/#despre' },
+  { name: 'Servicii', path: '/servicii' },
+  { name: 'Despre Noi', path: '/despre-noi' },
   { name: 'Contact', path: '/contact' },
 ];
 

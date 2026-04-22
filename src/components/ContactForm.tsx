@@ -3,7 +3,7 @@
 import { useState, FormEvent } from 'react';
 import { motion } from 'framer-motion';
 import { Send, CheckCircle2 } from 'lucide-react';
-import { supabase } from '@/src/lib/supabase';
+import { submitContactForm } from '@/src/lib/actions';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -22,18 +22,11 @@ export default function ContactForm() {
     setError('');
 
     try {
-      const { error: submitError } = await supabase
-        .from('contact_messages')
-        .insert([
-          {
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            message: formData.message,
-          },
-        ]);
+      const result = await submitContactForm(formData);
 
-      if (submitError) throw submitError;
+      if (!result.success) {
+        throw new Error(result.error);
+      }
 
       setSuccess(true);
       setFormData({ name: '', email: '', phone: '', message: '' });

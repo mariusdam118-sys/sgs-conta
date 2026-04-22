@@ -13,51 +13,7 @@ import {
   X,
 } from 'lucide-react';
 import Link from 'next/link';
-
-const services = [
-  {
-    id: 'contabilitate',
-    title: 'Contabilitate',
-    subtitle: 'Gestiune completă și raportare transparentă',
-    icon: Calculator,
-    description: 'Oferim servicii complete de evidență contabilă, adaptate specificului afacerii dumneavoastră, asigurând conformitatea cu toate reglementările în vigoare.',
-    details: [
-      'Înregistrarea cronologică a articolelor contabile',
-      'Întocmirea balanței de verificare lunare',
-      'Calculul impozitelor și întocmirea declarațiilor fiscale',
-      'Efectuarea bilanțului contabil semestrial și anual',
-      'Consultanță privind organizarea contabilității primare'
-    ]
-  },
-  {
-    id: 'hr',
-    title: 'Salarizare & HR',
-    subtitle: 'Administrare personal și calcul fără erori',
-    icon: Users,
-    description: 'Gestionăm întregul proces de salarizare și administrare de personal, oferindu-vă siguranța unor calcule corecte și a respectării legislației muncii.',
-    details: [
-      'Calculul statelor de plată și a contribuțiilor sociale',
-      'Gestionarea registrului general de evidență a salariaților (REVISAL)',
-      'Întocmirea și depunerea declarației 112',
-      'Administrarea dosarelor de personal',
-      'Consultanță privind legislația muncii și salarizare'
-    ]
-  },
-  {
-    id: 'consultanta',
-    title: 'Consultanță Fiscală',
-    subtitle: 'Expertiză CCF pentru optimizare sigură',
-    icon: ShieldCheck,
-    description: 'Specialiștii noștri autorizați CCF vă oferă soluții strategice pentru optimizarea poverii fiscale, respectând în totalitate cadrul legal.',
-    details: [
-      'Analiza structurii fiscale a afacerii.',
-      'Optimizarea impozitelor și taxelor.',
-      'Asistență în timpul controalelor fiscale.',
-      'Consultanță privind TVA și accize.',
-      'Planificare fiscală internațională.'
-    ]
-  }
-];
+import { services } from '@/src/lib/data';
 
 export default function Home() {
   const [selectedService, setSelectedService] = useState<typeof services[0] | null>(null);
@@ -129,13 +85,13 @@ export default function Home() {
           </div>
           <div>
             <h3 className="text-2xl font-bold text-navy mb-1">{services[0].title}</h3>
-            <p className="text-navy/50 text-sm italic">{services[0].subtitle}</p>
+            <p className="text-navy/50 text-sm italic line-clamp-2">{services[0].description}</p>
           </div>
         </motion.div>
 
         {/* Service Card 2 - HR */}
         <motion.div 
-          onClick={() => setSelectedService(services[1])}
+          onClick={() => setSelectedService(services[2])}
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.5 }}
@@ -148,8 +104,8 @@ export default function Home() {
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">02. People & HR</span>
           </div>
           <div>
-            <h3 className="text-2xl font-bold text-navy mb-1">{services[1].title}</h3>
-            <p className="text-navy/50 text-sm italic">{services[1].subtitle}</p>
+            <h3 className="text-2xl font-bold text-navy mb-1">{services[2].title}</h3>
+            <p className="text-navy/50 text-sm italic line-clamp-2">{services[2].description}</p>
           </div>
         </motion.div>
 
@@ -244,7 +200,6 @@ export default function Home() {
                   </div>
                   <div>
                     <h2 className="text-3xl md:text-4xl font-black text-navy uppercase tracking-tighter leading-[0.9] mb-2">{selectedService.title}</h2>
-                    <p className="text-royal font-bold text-xs uppercase tracking-widest leading-normal">{selectedService.subtitle}</p>
                   </div>
                 </div>
 
@@ -298,6 +253,13 @@ export default function Home() {
                   <p className="text-navy/50 leading-relaxed italic max-w-xl">
                     Fiecare client beneficiază de un expert dedicat și soluții tehnologice de ultimă oră pentru a asigura o creștere sănătoasă a business-ului.
                   </p>
+                  <Link 
+                    href="/despre-noi"
+                    className="inline-flex items-center gap-2 text-royal font-bold uppercase text-xs tracking-widest hover:gap-4 transition-all"
+                  >
+                    Află mai multe despre noi
+                    <ArrowRight size={16} />
+                  </Link>
                 </div>
               </div>
               

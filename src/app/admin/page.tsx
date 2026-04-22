@@ -83,8 +83,28 @@ export default function AdminLogin() {
             {loading ? 'Se procesează...' : 'Autentificare'}
           </button>
 
+          <div className="text-center">
+            <button
+              type="button"
+              onClick={async () => {
+                if (!email) {
+                  setError('Vă rugăm să introduceți adresa de email mai întâi.');
+                  return;
+                }
+                const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+                  redirectTo: `${window.location.origin}/admin/reset-password`,
+                });
+                if (resetError) setError(resetError.message);
+                else alert('Un email pentru resetarea parolei a fost trimis.');
+              }}
+              className="text-xs text-royal font-bold hover:underline"
+            >
+              Am uitat parola
+            </button>
+          </div>
+
           <p className="text-center text-xs text-navy/30 italic">
-            Dacă ați uitat parola, contactați administratorul de sistem.
+            Accesul este permis doar personalului autorizat SGS Conta.
           </p>
         </form>
       </div>

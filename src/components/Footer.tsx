@@ -22,12 +22,12 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="font-semibold text-lg mb-6">Servicii</h4>
+          <h4 className="font-semibold text-lg mb-6">Link-uri Rapide</h4>
           <ul className="space-y-4 text-white/60 text-sm">
-            <li><Link href="/#servicii" className="hover:text-cyan-glow transition-colors">Contabilitate Generală</Link></li>
-            <li><Link href="/#servicii" className="hover:text-cyan-glow transition-colors">Consultanță Fiscală CCF</Link></li>
-            <li><Link href="/#servicii" className="hover:text-cyan-glow transition-colors">Salarizare & HR</Link></li>
-            <li><Link href="/#servicii" className="hover:text-cyan-glow transition-colors">Audit Financiar</Link></li>
+            <li><Link href="/" className="hover:text-cyan-glow transition-colors">Acasă</Link></li>
+            <li><Link href="/servicii" className="hover:text-cyan-glow transition-colors">Servicii</Link></li>
+            <li><Link href="/despre-noi" className="hover:text-cyan-glow transition-colors">Despre Noi</Link></li>
+            <li><Link href="/contact" className="hover:text-cyan-glow transition-colors">Contact</Link></li>
           </ul>
         </div>
 
@@ -58,11 +58,11 @@ export default function Footer() {
             </li>
             <li className="flex items-center gap-3">
               <Phone className="w-4 h-4 text-cyan-glow" />
-              <span>0722 80 21 21</span>
+              <a href="tel:+40722802121" className="hover:text-cyan-glow transition-colors">0722 80 21 21</a>
             </li>
             <li className="flex items-center gap-3">
               <Mail className="w-4 h-4 text-cyan-glow" />
-              <span>sgsconta@gmail.com</span>
+              <a href="mailto:sgsconta@gmail.com" className="hover:text-cyan-glow transition-colors">sgsconta@gmail.com</a>
             </li>
           </ul>
         </div>

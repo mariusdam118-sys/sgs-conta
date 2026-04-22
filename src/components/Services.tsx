@@ -1,36 +1,42 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Calculator, ShieldCheck, Users, TrendingUp } from 'lucide-react';
+import { services as staticServices } from '@/src/lib/data';
+import { getSiteContent } from '@/src/lib/actions';
+import { useEffect, useState } from 'react';
+import { Calculator, ShieldCheck, Users, TrendingUp, Briefcase, FileText } from 'lucide-react';
 
-const services = [
-  {
-    title: 'Contabilitate Generală',
-    description: 'Gestionare completă a documentelor financiar-contabile, raportări periodice și bilanțuri anuale conforme cu standardele în vigoare.',
-    icon: Calculator,
-    color: 'bg-blue-500/10 text-blue-600',
-  },
-  {
-    title: 'Consultanță Fiscală CCF',
-    description: 'Optimizare fiscală și reprezentare în fața autorităților prin experți autorizați CCF - Camera Consultanților Fiscali.',
-    icon: ShieldCheck,
-    color: 'bg-indigo-500/10 text-indigo-600',
-  },
-  {
-    title: 'Salarizare & HR',
-    description: 'Administrare personal, calcul salarial (REVISAL), contracte de muncă și consultanță legislativă în domeniul resurselor umane.',
-    icon: Users,
-    color: 'bg-cyan-500/10 text-cyan-600',
-  },
-  {
-    title: 'Analiză și Strategie',
-    description: 'Dashboard-uri personalizate pentru monitorizarea cash-flow-ului și previzionarea direcțiilor de dezvoltare ale business-ului.',
-    icon: TrendingUp,
-    color: 'bg-emerald-500/10 text-emerald-600',
-  },
-];
+const iconMap: any = {
+  'Contabilitate Generală': Calculator,
+  'Consultanță Fiscală CCF': ShieldCheck,
+  'Salarizare & HR': Users,
+  'Analiză și Strategie': TrendingUp,
+  'Audit Financiar': FileText,
+  'Înființări Firme': Briefcase,
+};
+
+const colorMap: any = {
+  'Contabilitate Generală': 'bg-blue-500/10 text-blue-600',
+  'Consultanță Fiscală CCF': 'bg-indigo-500/10 text-indigo-600',
+  'Salarizare & HR': 'bg-cyan-500/10 text-cyan-600',
+  'Analiză și Strategie': 'bg-emerald-500/10 text-emerald-600',
+  'Audit Financiar': 'bg-orange-500/10 text-orange-600',
+  'Înființări Firme': 'bg-purple-500/10 text-purple-600',
+};
 
 export default function Services() {
+  const [services, setServices] = useState<any[]>([]);
+
+  useEffect(() => {
+    getSiteContent().then(res => {
+      if (res.success && res.content.services) {
+        setServices(res.content.services);
+      } else {
+        setServices(staticServices);
+      }
+    });
+  }, []);
+
   return (
     <section id="servicii" className="py-24 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
@@ -41,30 +47,35 @@ export default function Services() {
               Soluții Contabile <br /> Construite pentru <span className="text-royal">Performanță.</span>
             </h2>
           </div>
-          <p className="text-navy/60 max-w-sm md:text-right">
+          <p className="text-navy/60 max-w-sm md:text-right italic">
             Acoperim tot spectrul financiar pentru a vă permite să vă concentrați exclusiv pe creșterea afacerii.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {services.map((service, index) => (
-            <motion.div
-              key={service.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="p-8 rounded-[32px] border border-gray-100 bg-white hover:shadow-2xl hover:shadow-royal/10 transition-all group"
-            >
-              <div className={`w-14 h-14 rounded-2xl ${service.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-                <service.icon className="w-7 h-7" />
-              </div>
-              <h3 className="text-xl font-bold text-navy mb-4">{service.title}</h3>
-              <p className="text-navy/60 text-sm leading-relaxed">
-                {service.description}
-              </p>
-            </motion.div>
-          ))}
+          {services.slice(0, 4).map((service, index) => {
+            const Icon = iconMap[service.title] || Briefcase;
+            const colorClass = colorMap[service.title] || 'bg-slate-500/10 text-slate-600';
+
+            return (
+              <motion.div
+                key={service.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="p-8 rounded-[32px] border border-gray-100 bg-white hover:shadow-2xl hover:shadow-royal/10 transition-all group"
+              >
+                <div className={`w-14 h-14 rounded-2xl ${colorClass} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+                  <Icon className="w-7 h-7" />
+                </div>
+                <h3 className="text-xl font-bold text-navy mb-4">{service.title}</h3>
+                <p className="text-navy/60 text-sm leading-relaxed line-clamp-3">
+                  {service.description}
+                </p>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

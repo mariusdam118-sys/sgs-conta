@@ -3,8 +3,18 @@
 import ContactForm from '@/src/components/ContactForm';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { getSiteContent } from '@/src/lib/actions';
+import { useEffect, useState } from 'react';
 
 export default function Contact() {
+  const [content, setContent] = useState<any>(null);
+
+  useEffect(() => {
+    getSiteContent().then(res => {
+      if (res.success) setContent(res.content.contact);
+    });
+  }, []);
+
   return (
     <main className="pt-32 pb-24 px-6 bg-ice/30">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20">
@@ -22,10 +32,10 @@ export default function Contact() {
               animate={{ opacity: 1, y: 0 }}
               className="text-5xl md:text-7xl font-black text-navy leading-none tracking-tighter"
             >
-              Să discutăm despre <br /> <span className="text-royal">viitorul tău.</span>
+              {content?.hero_title || 'Să discutăm despre'} <br /> <span className="text-royal">{content?.hero_title ? '' : 'viitorul tău.'}</span>
             </motion.h1>
             <p className="text-navy/60 text-lg max-w-md">
-              Indiferent de mărimea afacerii tale, suntem aici să îți oferim suportul contabil și fiscal de care ai nevoie.
+              {content?.hero_desc || 'Indiferent de mărimea afacerii tale, suntem aici să îți oferim suportul contabil și fiscal de care ai nevoie.'}
             </p>
           </div>
 
@@ -42,7 +52,9 @@ export default function Contact() {
               <Phone className="w-5 h-5 text-royal" />
               Telefon
             </div>
-            <p className="text-navy/60 text-sm italic">0722 80 21 21</p>
+            <a href={`tel:${(content?.phone || '0722 80 21 21').replace(/\s/g, '')}`} className="text-navy/60 text-sm italic hover:text-royal transition-colors">
+              {content?.phone || '0722 80 21 21'}
+            </a>
           </div>
           <div className="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm space-y-4">
             <div className="flex items-center gap-3 text-navy font-bold uppercase text-xs tracking-wider">
@@ -50,7 +62,9 @@ export default function Contact() {
               <Mail className="w-5 h-5 text-royal absolute" />
               Email
             </div>
-            <p className="text-navy/60 text-sm italic">sgsconta@gmail.com</p>
+            <a href={`mailto:${content?.email || 'sgsconta@gmail.com'}`} className="text-navy/60 text-sm italic hover:text-royal transition-colors">
+              {content?.email || 'sgsconta@gmail.com'}
+            </a>
           </div>
           <div className="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm space-y-4">
             <div className="flex items-center gap-3 text-navy font-bold uppercase text-xs tracking-wider">
