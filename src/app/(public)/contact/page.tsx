@@ -8,6 +8,10 @@ import { useEffect, useState } from 'react';
 
 export default function Contact() {
   const [content, setContent] = useState<any>(null);
+  const address =
+    content?.address ||
+    'Sos. Pantelimon, Nr.285A, Bl.11A, Sc.1, Et.8, Ap.42, Sector 2, București, România';
+  const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`;
 
   useEffect(() => {
     getSiteContent().then(res => {
@@ -45,7 +49,7 @@ export default function Contact() {
               <MapPin className="w-5 h-5 text-royal" />
               Adresă
             </div>
-            <p className="text-navy/60 text-xs italic">Sos. Pantelimon, Nr.285A, Bl.11a, Sc.1, Et.8, Ap.42, Sector 2</p>
+            <p className="text-navy/60 text-xs italic">{address}</p>
           </div>
           <div className="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm space-y-4">
             <div className="flex items-center gap-3 text-navy font-bold uppercase text-xs tracking-wider">
@@ -80,12 +84,9 @@ export default function Contact() {
 
         {/* Map Embed Placeholder */}
         <div className="w-full aspect-video bg-navy/5 rounded-[2.5rem] overflow-hidden border border-slate-200 shadow-inner relative">
-            <div className="absolute inset-0 flex items-center justify-center text-navy/20 font-bold uppercase tracking-widest text-sm">
-              Google Maps Embed Here
-            </div>
             <iframe
               title="Locație sgsconta"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2848.8105574034!2d26.1030372!3d44.4371199!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b1ff394da688a7%3A0xe543598d68965646!2sPia%C8%9Ba%20Universit%C4%83%C8%9Bii!5e0!3m2!1sro!2sro!4v1713732069248!5m2!1sro!2sro"
+              src={mapSrc}
               className="w-full h-full border-0 brightness-100 grayscale-[0.5]"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"

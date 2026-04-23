@@ -15,7 +15,7 @@
 
 @layer base {
   body {
-    @apply bg-ice text-navy font-sans antialiased selection:bg-royal selection:text-white;
+    @apply bg-ice text-navy font-sans antialiased selection:bg-royal selection:text-white leading-relaxed;
   }
 }
 

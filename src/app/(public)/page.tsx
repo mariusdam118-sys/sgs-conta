@@ -6,10 +6,11 @@ import {
   Calculator, 
   Users, 
   ArrowRight, 
-  Clock, 
+  Clock,
   Trophy,
   ChevronRight,
   ShieldCheck,
+  Landmark,
   X,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -17,16 +18,17 @@ import { services } from '@/src/lib/data';
 
 export default function Home() {
   const [selectedService, setSelectedService] = useState<typeof services[0] | null>(null);
+  const InfiintariIcon = services[5].icon;
 
   return (
     <main className="pt-2">
-      <div className="max-w-7xl mx-auto p-6 grid grid-cols-1 md:grid-cols-12 md:grid-rows-6 gap-4 min-h-[calc(100vh-100px)]">
+      <div className="max-w-7xl mx-auto p-6 grid grid-cols-1 gap-4 md:grid-cols-12 md:auto-rows-[140px]">
         
         {/* Main Hero Card - 8x4 */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="md:col-span-8 md:row-span-4 bg-linear-to-tr from-navy to-royal rounded-[2.5rem] p-8 md:p-14 text-white relative overflow-hidden shadow-2xl flex flex-col justify-end group min-h-100"
+          className="md:col-span-8 md:row-span-4 bg-linear-to-tr from-navy to-royal rounded-[2.5rem] p-8 sm:p-10 md:p-14 text-white relative overflow-hidden shadow-2xl flex flex-col justify-end group h-full min-h-[520px] sm:min-h-[560px] md:min-h-0"
         >
           <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-400/20 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-110 transition-transform duration-1000" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-400/10 blur-[80px] rounded-full translate-y-1/2 -translate-x-1/2" />
@@ -36,7 +38,7 @@ export default function Home() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-cyan-300 font-mono text-xs tracking-[0.3em] uppercase mb-4 block"
+              className="text-cyan-300 font-mono text-xs sm:text-sm tracking-[0.25em] uppercase mb-4 block"
             >
               Partenerul tău în succes financiar
             </motion.span>
@@ -44,11 +46,11 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-5xl md:text-7xl font-black leading-[0.95] tracking-tighter mb-6 uppercase"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[1.14] sm:leading-[1.12] md:leading-[1.06] tracking-tight mb-6 uppercase text-balance"
             >
               Excelență în <br/> Consultanță <br/> <span className="text-cyan-300 italic">Fiscală CCF</span>
             </motion.h1>
-            <p className="max-w-md text-base md:text-lg text-blue-100 font-light leading-relaxed mb-8">
+            <p className="max-w-xl text-lg md:text-xl text-blue-100 font-light leading-relaxed mb-8">
               Expertiză contabilă de înaltă precizie pentru afaceri vizionare. Suntem autorizați CCF și dedicați succesului tău.
             </p>
             <div className="flex flex-wrap gap-4">
@@ -81,11 +83,11 @@ export default function Home() {
             <div className="p-3 bg-blue-50 rounded-2xl group-hover:bg-royal group-hover:text-white transition-colors">
               <Calculator className="w-8 h-8 text-royal group-hover:text-white" />
             </div>
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">01. Servicii Core</span>
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">01. Servicii Core</span>
           </div>
           <div>
             <h3 className="text-2xl font-bold text-navy mb-1">{services[0].title}</h3>
-            <p className="text-navy/50 text-sm italic line-clamp-2">{services[0].description}</p>
+            <p className="text-navy/60 text-base md:text-sm italic leading-snug line-clamp-2">{services[0].description}</p>
           </div>
         </motion.div>
 
@@ -101,11 +103,31 @@ export default function Home() {
             <div className="p-3 bg-cyan-100 rounded-2xl group-hover:bg-cyan-500 group-hover:text-white transition-colors">
               <Users className="w-8 h-8 text-cyan-600 group-hover:text-white" />
             </div>
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">02. People & HR</span>
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">02. People & HR</span>
           </div>
           <div>
             <h3 className="text-2xl font-bold text-navy mb-1">{services[2].title}</h3>
-            <p className="text-navy/50 text-sm italic line-clamp-2">{services[2].description}</p>
+            <p className="text-navy/60 text-base md:text-sm italic leading-snug line-clamp-2">{services[2].description}</p>
+          </div>
+        </motion.div>
+
+        {/* Service Card 3 - Înființări */}
+        <motion.div 
+          onClick={() => setSelectedService(services[5])}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.55 }}
+          className="md:col-span-4 md:row-span-2 bg-white border border-slate-200 rounded-[2rem] p-8 flex flex-col justify-between shadow-sm hover:border-purple-400 transition-all group cursor-pointer"
+        >
+          <div className="flex justify-between items-start">
+            <div className="p-3 bg-purple-50 rounded-2xl group-hover:bg-purple-600 transition-colors">
+              <InfiintariIcon className="w-8 h-8 text-purple-600 group-hover:text-white" />
+            </div>
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">03. Înființări</span>
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold text-navy mb-1">{services[5].title}</h3>
+            <p className="text-navy/60 text-base md:text-sm italic leading-snug line-clamp-2">{services[5].description}</p>
           </div>
         </motion.div>
 
@@ -118,7 +140,7 @@ export default function Home() {
         >
           <div className="flex items-center gap-4 border-b border-slate-100 pb-4">
             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <div className="text-[10px] font-bold uppercase tracking-widest text-navy/40">Program de Lucru</div>
+            <div className="text-xs font-bold uppercase tracking-widest text-navy/40">Program de Lucru</div>
           </div>
           <div className="space-y-3 font-medium text-sm">
             <div className="flex justify-between">
@@ -144,9 +166,9 @@ export default function Home() {
           className="md:col-span-5 md:row-span-2 bg-navy text-white rounded-[2rem] p-8 flex items-center justify-between shadow-xl relative overflow-hidden"
         >
           <div className="relative z-10 space-y-4">
-            <p className="text-[10px] text-blue-300 font-bold uppercase tracking-widest">Ai o întrebare?</p>
+            <p className="text-xs text-blue-300 font-bold uppercase tracking-widest">Ai o întrebare?</p>
             <h4 className="text-3xl font-black leading-none uppercase">Pregătit să <br/> colaborăm?</h4>
-            <p className="text-blue-200 text-[10px] opacity-60 leading-tight">Sos. Pantelimon, Nr.285A, Bl.11a, Sc.1, Et.8, Ap.42, Sector 2</p>
+            <p className="text-blue-200 text-xs opacity-60 leading-snug">Sos. Pantelimon, Nr.285A, Bl.11a, Sc.1, Et.8, Ap.42, Sector 2</p>
           </div>
           <Link 
             href="/contact"
@@ -168,9 +190,25 @@ export default function Home() {
           <div className="p-3 bg-white shadow-sm rounded-xl group-hover:bg-royal group-hover:text-white transition-colors">
              <ShieldCheck size={28} className="text-navy group-hover:text-white" />
           </div>
-          <div className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em]">Membru Afiliat</div>
+          <div className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-[0.2em]">Membru Afiliat</div>
           <div className="text-xs font-black text-navy leading-tight uppercase">
             CCF - CAMERA <br/> CONSULTANȚILOR <br/> FISCALI
+          </div>
+        </motion.div>
+
+        {/* CECCAR Card */}
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.9 }}
+          className="md:col-span-4 md:row-span-2 bg-white border border-slate-200 rounded-[2rem] p-6 flex flex-col items-center justify-center text-center gap-3 shadow-sm"
+        >
+          <div className="p-3 bg-blue-50 rounded-xl text-royal">
+            <Landmark size={28} className="text-royal" />
+          </div>
+          <div className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-[0.2em]">Membru</div>
+          <div className="text-xs font-black text-navy leading-tight uppercase">
+            CECCAR - CORPUL <br /> EXPERȚILOR CONTABILI <br /> ȘI CONTABILILOR AUTORIZAȚI <br /> DIN ROMÂNIA
           </div>
         </motion.div>
 
@@ -199,7 +237,7 @@ export default function Home() {
                     <selectedService.icon size={40} />
                   </div>
                   <div>
-                    <h2 className="text-3xl md:text-4xl font-black text-navy uppercase tracking-tighter leading-[0.9] mb-2">{selectedService.title}</h2>
+                    <h2 className="text-3xl md:text-4xl font-black text-navy uppercase tracking-tight leading-[1.02] mb-2 text-balance">{selectedService.title}</h2>
                   </div>
                 </div>
 
@@ -244,18 +282,18 @@ export default function Home() {
       <section id="despre" className="py-24 px-6">
         <div className="max-w-7xl mx-auto space-y-8">
            <div className="flex flex-col md:flex-row gap-8">
-              <div className="flex-1 bg-white border border-slate-200 rounded-[2.5rem] p-12 shadow-sm">
+              <div className="flex-1 bg-white border border-slate-200 rounded-[2.5rem] p-8 sm:p-10 md:p-12 shadow-sm">
                 <div className="space-y-6">
-                  <h4 className="text-royal font-bold tracking-[0.2em] uppercase text-xs">Viziunea Noastră</h4>
-                  <h2 className="text-4xl md:text-5xl font-black text-navy leading-none uppercase">
+                  <h4 className="text-royal font-bold tracking-[0.2em] uppercase text-sm">Viziunea Noastră</h4>
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-navy leading-[1.16] sm:leading-[1.12] md:leading-[1.08] uppercase text-balance">
                     Încrederea se construiește pe <span className="text-royal italic">Transparență.</span>
                   </h2>
-                  <p className="text-navy/50 leading-relaxed italic max-w-xl">
+                  <p className="text-navy/60 text-lg leading-relaxed italic max-w-xl">
                     Fiecare client beneficiază de un expert dedicat și soluții tehnologice de ultimă oră pentru a asigura o creștere sănătoasă a business-ului.
                   </p>
                   <Link 
                     href="/despre-noi"
-                    className="inline-flex items-center gap-2 text-royal font-bold uppercase text-xs tracking-widest hover:gap-4 transition-all"
+                    className="inline-flex items-center gap-2 text-royal font-bold uppercase text-sm tracking-widest hover:gap-4 transition-all"
                   >
                     Află mai multe despre noi
                     <ArrowRight size={16} />
@@ -269,7 +307,7 @@ export default function Home() {
                  </div>
                  <div>
                     <p className="text-4xl font-black text-navy leading-none">15+</p>
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-navy/40">Ani de Excelență</p>
+                    <p className="text-xs font-bold uppercase tracking-widest text-navy/40">Ani de Excelență</p>
                  </div>
               </div>
            </div>
